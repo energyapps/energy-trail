@@ -1,0 +1,304 @@
+---
+layout: keybind
+---
+
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+
+    <!-- // <script src="http://d3js.org/d3.v3.min.js"></script> -->
+
+    <style>
+    #master {
+      border: 1px black solid;
+      width: 950px;
+      height: 400px;
+    }    
+        circle, rect {
+/*            fill:transparent;
+            stroke-width:1;
+            stroke: black;*/
+            opacity: 0.3;
+        }
+        #id1 {fill:#FF00FF;}
+        .bullet {fill:#00FF00;}
+        .id3 {fill:#EE4000;}
+        .animal {fill:#00FFFF;}
+
+
+    </style>
+
+  </head>
+  <body>
+    <button onclick="turn()">Turn</button>
+    <div id="kill-count">
+      0
+    </div>  
+    <div id="master">
+
+    </div>
+
+
+    <script type="text/javascript">
+var width = 950, height = 400;
+var zi = 0;
+var origin = [0,0];
+var svg = d3.select("#master").append("svg")
+  .attr("width", width)
+  .attr("height", height)
+  .append("g")
+    .attr("transform", "translate(0,0)");
+
+function randomIntFromInterval(min,max)
+{
+    return Math.floor(Math.random()*(max-min+1)+min);
+}
+
+var direction;
+var ki = 0;
+var xm, ym;
+var point = [width/2, height/2];
+var momentum = [0, 0];
+var AnimLow = 1;
+var AnimHigh = 1000;
+var stoneData = stoneDataGen();
+function stoneDataGen() {
+  var data = [];
+  var MinNumStones = 5;
+  var MaxNumStones = 33;
+  var NumStones = randomIntFromInterval(MinNumStones,MaxNumStones)
+  for (var i = 0; i < NumStones; i++) {
+    data[i] = {};
+    data[i].id = i;
+    data[i].height = randomIntFromInterval(50,100);
+    data[i].width = randomIntFromInterval(40,100);
+    data[i].coord = [randomIntFromInterval(5,width),randomIntFromInterval(5,height)];    
+  };
+
+  return data;
+}
+
+var circle = svg.append("circle")
+    .datum(point)
+    .attr("r", 10)
+    .attr("id","id1");
+
+var stones = svg.selectAll(".stones")
+    .data(stoneData)
+    .enter()
+    .append("rect")
+      .attr("class","stones")
+      .attr('transform', function(d) { 
+        return 'translate(' + d.coord + ')'; })
+      .attr('width',function(d){return d.width})
+      .attr('height',function(d){return d.height})
+      .attr("class","id3");
+
+function move(x, y, d) {
+    return function(event) {
+        event.preventDefault();
+        direction = d;  
+        xm = x;
+        ym = y;      
+        var nextPoint = [point[0] + (x*10),point[1] + (y*10)]
+
+        // Detect if its going to run into a barrier. 
+        if (detectStone(nextPoint) != true) {
+          // console.log('dt')
+          momentum = [momentum[0] + x, momentum[1] + y];                  
+        };
+    };
+}
+
+function detectStone(nP) {
+  for (var i = 0; i < stoneData.length; i++) {
+    // console.log('hello')
+      
+    
+    var rO = stoneData[i].coord; //stone origin
+    var rW = stoneData[i].width; //stone width
+    var rH = stoneData[i].height; //stone height
+
+    // only return if its true, otherwise don't return, cuz that will break. 
+    if (detect(nP,rO,rW,rH) === true) {
+      return true;
+    } 
+  };
+}
+
+function detect(nP,rO,rW,rH) {
+  //next point
+  var npx = nP[0];
+  var npy = nP[1];
+  //rectangle origin
+  var ax = rO[0];
+  var ay = rO[1];
+
+  // other points on rectangle
+  var by = ay*1;
+  var dx = ax*1;
+  var bx = ax + rW;
+  var dy = ay + rH; 
+  var bax = bx - ax;
+  var bay = by - ay;
+  var dax = dx - ax;
+  var day = dy - ay;
+
+  if ((npx - ax) * bax + (npy - ay) * bay < 0.0) {}
+  else if ((npx - bx) * bax + (npy - by) * bay > 0.0) {}
+  else if ((npx - ax) * dax + (npy - ay) * day < 0.0) {}
+  else if ((npx - dx) * dax + (npy - dy) * day > 0.0) {}
+  else {
+    return true};
+}
+
+function shoot() {    
+    return function(event) {
+      event.preventDefault();
+      zi += 1;
+
+      var rect = svg.append("rect")
+        .attr('transform', function(d) { return 'translate(' + point + ')'; })
+        .attr('width',"10")
+        .attr('height',"10")
+        .attr("class","bullet zi" + zi);
+
+      increment(xm,ym,point,rect,30);
+      
+    };
+}
+
+function increment(xm,ym,point,rect,speed) {        
+      
+  var nextpoint = [point[0]+(xm*10),point[1]+(ym*10)];
+  // console.log(nextpoint)
+
+  rect.transition()
+    .ease("linear")
+    .duration(speed)        
+    .attr('transform', function(d) { return 'translate(' + nextpoint + ')'; })
+    .each('end',function(){
+
+      // each new transition check to see if you're inside the svg container or not
+      if (detect(nextpoint,origin,width,height) === true) {
+        if (d3.select(this)[0][0].classList[0] === 'animal') {
+          // if you don't hit a stone, continue
+          if (detectStone(nextpoint) != true) {
+            increment(xm,ym,nextpoint,rect,speed);  
+          }
+          else {
+            // if you hit a stone, turn the other way and continue
+            increment(-xm,-ym,nextpoint,rect,speed);   
+          }
+        } else if (d3.select(this)[0][0].classList[0] === 'bullet') {
+          if (detectStone(nextpoint) != true) {
+            if (collision(nextpoint) != true) {
+              increment(xm,ym,nextpoint,rect,speed);  
+            }
+            else {
+              ki += 1;
+              document.getElementById('kill-count').innerHTML = ki;
+              d3.select(this).remove();
+            }            
+          }
+          else {
+            // remove node when it hits a rock  
+            d3.select(this).remove();
+          }
+        }
+      } else {
+        // remove node when it leaves the screen.
+        d3.select(this).remove();
+      };      
+    })  
+}
+
+function collision(nP) {  
+  // console.log(d3.selectAll('.animal')[0])
+  var nowAnimals = d3.selectAll('.animal')[0]
+
+  for (var i = 0; i < nowAnimals.length; i++) {
+    var Animx = nowAnimals[i].transform.animVal[0].matrix.e; 
+    var Animy = nowAnimals[i].transform.animVal[0].matrix.f; 
+    var AnimO = [Animx,Animy];
+    var AnimW = nowAnimals[i].width.baseVal.value; 
+    var AnimH = nowAnimals[i].height.baseVal.value;     
+    if (detect(nP,AnimO,AnimW,AnimH) === true) {
+      // console.log()
+      d3.select(nowAnimals[i]).transition().remove();
+      return true;
+    };
+  };
+
+  
+  // in that moment, capture location of all animals (plus one?)
+  // loop through those animals and see if nextpoint (intersects)
+  // if it intersects with that node, interrupt that nodes' travel and remove the bullet
+  // if it intersects, break the loop
+}
+
+function animalCreate(num) {
+  var startLocation = [0,0];
+  var AnimDirection = randomIntFromInterval(0,3);
+
+  if (AnimDirection === 0) {
+    startLocation[0] = 0;
+    startLocation[1] = randomIntFromInterval(10, height);
+    var xym = [2, 0];
+    // console.log('left');
+  } else if (AnimDirection=== 1) {
+    startLocation[0] = randomIntFromInterval(10, width);
+    startLocation[1] = 0;
+    var xym = [0, 2];
+    // console.log('top')
+  } else if (AnimDirection=== 2) {    
+    startLocation[0] = width - 20;
+    startLocation[1] = randomIntFromInterval(10, height);
+    var xym = [-2, 0];
+    // console.log('right');
+  } else if (AnimDirection=== 3) {
+    startLocation[0] = randomIntFromInterval(10, width);
+    startLocation[1] = height - 20;
+    var xym = [0, -2];
+    // console.log('bottom');
+  }
+      
+  var rect = svg.append("rect")
+    .attr('transform', function(d) { return 'translate(' + startLocation + ')'; })
+    .attr('width',"20")
+    .attr('height',"20")
+    .attr("class","animal zi" + zi);
+
+    increment(xym[0],xym[1],startLocation,rect,200);
+}
+
+d3.select('body').call(d3.keybinding()
+    .on('←', move(-2, 0, 0))
+    .on('↑', move(0, -2, 1))
+    .on('→', move(2, 0, 2))
+    .on('↓', move(0, 2, 3))
+    .on('z', shoot()));
+
+var animNum = 0;
+
+d3.timer(function(k) {  
+    // console.log('hello')
+
+    if (randomIntFromInterval(AnimLow,AnimHigh) > randomIntFromInterval(980,995) && animNum < 3000) {
+      animNum += 1;
+      animalCreate(animNum);
+    };
+
+    point[0] = Math.min(width,  Math.max(0, momentum[0] + point[0]));
+    point[1] = Math.min(height, Math.max(0, momentum[1] + point[1]));
+    circle
+        .datum(point)
+        .attr('transform', function(d) { return 'translate(' + d + ')'; });
+    momentum[0] *= .9;
+    momentum[1] *= .9;
+});
+
+    </script>
+  </body>
+</html>  

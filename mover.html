@@ -1,0 +1,153 @@
+---
+layout: keybind
+---
+
+<style>
+    #master {
+      border: 1px black solid;
+      width: 100%;
+      height: 500px;
+      background-color: black;
+    }    
+
+
+</style>
+<div id="master">
+
+</div>
+<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut orci ante, faucibus eu maximus sed, bibendum sed orci. Aenean ornare ipsum ac nisi finibus fringilla id vitae risus. Morbi vitae congue massa, ultrices egestas elit. Nam elementum, metus in varius vehicula, tortor libero varius dui, ac tempor orci nulla pretium orci. Nunc at dolor interdum, imperdiet eros ac, rutrum purus. Phasellus ex tellus, laoreet quis malesuada at, finibus ut nulla. Aenean vel tincidunt nulla. In hac habitasse platea dictumst. Donec in pharetra ipsum, pretium euismod sem. Phasellus augue leo, malesuada id pretium vel, commodo id tortor.</p>
+
+<p>Nullam eget elit vehicula, pharetra dui eu, facilisis ante. Maecenas lobortis, risus sit amet faucibus sollicitudin, odio nunc ultrices lectus, vitae porta quam magna in lectus. Mauris elit nisi, aliquam sit amet ipsum sit amet, dapibus lobortis justo. Etiam eleifend eu purus vel consectetur. Donec id urna sit amet elit vehicula fermentum. In id tincidunt ante. Quisque consequat accumsan odio. Morbi mollis dui sem, id euismod justo porttitor a. Proin orci dolor, vestibulum vitae maximus nec, aliquet nec purus.</p>
+
+<p>Vestibulum vitae ligula sed neque gravida pretium vel eget nisl. Cras ut dignissim lorem. Nam dapibus, mi a sagittis ornare, nulla risus pretium diam, pellentesque accumsan odio mauris finibus elit. Sed dictum viverra commodo. Duis pharetra sagittis est id consequat. Sed rutrum nulla sapien, eu aliquam quam semper ac. Nulla non quam ornare lectus interdum pharetra at ut libero. Nam cursus sagittis lorem, nec dignissim lorem facilisis sit amet. Sed consequat orci ut tellus semper tristique. Nam efficitur interdum sem et tincidunt. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Maecenas aliquam purus eros, quis finibus tortor dignissim eu.</p>
+
+<p>Morbi dolor magna, euismod finibus venenatis nec, pellentesque nec velit. Curabitur eu consectetur tellus. Donec eleifend non tellus non suscipit. Nunc commodo orci eget tincidunt molestie. Cras justo lacus, finibus a tempus vitae, scelerisque id augue. Phasellus sed nunc neque. Vivamus finibus elementum dui sit amet posuere. Duis rhoncus id leo id feugiat.</p>
+
+<p>In a egestas libero. Proin leo massa, euismod id eleifend sit amet, iaculis vitae felis. Quisque id pulvinar ipsum. Sed finibus turpis ut risus fermentum eleifend. Phasellus felis nibh, egestas porta libero ac, tincidunt sollicitudin orci. Morbi at gravida libero. Morbi tempus malesuada dui ut suscipit. Phasellus tincidunt metus sit amet neque fermentum pharetra eu ut turpis. In nec mi felis. In sed semper est. Nam rhoncus leo sed magna accumsan tincidunt. Aliquam lectus ligula, finibus eu placerat at, finibus ut purus. Morbi lectus orci, aliquet nec ipsum at, semper blandit lacus. Etiam quis mollis est. Maecenas auctor pellentesque elit.</p>
+
+
+<script>
+var its = 0;
+var itsN = 8;
+var scroll = 100; //(scroll amount) Need to do this based on height?
+var width = parseInt(d3.select("#master").style("width"));
+var height = 500;
+
+var svg = d3.select("#master").append("svg")
+    .attr("width", width)
+    .attr("height", height)
+
+var edge = 50;
+var bottom = 500;
+
+  //Box parameters
+  var barPadding = 1;
+  var imgWidth = 50;
+  var imgHeight = 50;
+
+  var defs = svg.append("defs")
+            .attr("id","mdef")
+            
+  var pattern1 = defs.append("pattern")
+    .attr("height",imgHeight)
+    .attr("width",imgWidth)
+    .attr("id","imageID1")
+    .attr("width",1)
+    .attr("height",1)
+    .append("svg:image")
+      .attr("width",100)
+      .attr("height",100)
+      .attr("xlink:href", "../img/paul/paul-green.png");
+
+  var pattern2 = defs.append("pattern")
+    .attr("height",imgHeight)
+    .attr("width",imgWidth)
+    .attr("id","imageID2")
+    .append("svg:image")
+      .attr("x",0)
+      .attr("y",0)
+      .attr("width",imgWidth - 10)
+      .attr("height",imgHeight - 10)
+      .attr("xlink:href", "http://placekitten.com/g/600/600");
+
+var scenery = [25,5,25,5,25,5,25,5,25,5,25,5,25,5,25,5,25,5,25,5,25,5,25,5,25,5,25,5,25,5,25,5,25,5,25,5,25,5,25,5,25,5,25,5,25,5,25,5,25,5,25,5,25,5,25,5,25,5,25,5,25,5,25,5,25,5,25,5,25,5,25,5,25,5,25,5,25,5,25,5,25,5,25,5,25,5,25,5,25,5,25,5,25,5,25,5,25,5,25,5,25,5,25,5,25,5,25,5,25,5,25,5,25,5,25,5,25,5,25,5,25,5,25,5,25,5,25];
+
+var group = svg
+    .append("g")
+    .attr("id", "grouper")
+    .attr("transform", "translate(0,0)");
+
+var rect = group.selectAll("rect")
+    .data(scenery)
+    .enter()
+    .append("rect")
+    .attr("stroke", "red")
+    .attr("fill", "blue")
+    .attr("width", 200)
+    .attr("height", 200)
+    .attr("x", function(d,i) {return d*30})
+    .attr("y", function(d,i) {return i*400});
+
+
+var square1 = svg.append("rect")
+  .attr("x",10)
+  .attr("y", 50)
+  .attr("width",100)
+  .attr("height",100)
+  .attr("fill","transparent")
+  .style("fill", "url(#imageID1)");
+
+
+function upwards() {
+  its -= 1;
+  square1.transition()
+    .ease("linear")
+    .duration(100)        
+    .attr("x",((1 - Math.cos(its/itsN*Math.PI))*((width-100)/2)));
+
+  var yy = group[0]["0"].transform.baseVal["0"].matrix.f + scroll;
+  console.log(yy);
+
+  group.transition()
+    .ease("linear")
+    .duration(100)  
+    .attr("transform", "translate(" + 0 + "," + yy + ")");
+
+}
+
+function downwards() {
+  its +=1;
+  square1.transition()
+    .ease("linear")
+    .duration(100)        
+    .attr("x",((1 - Math.cos(its/itsN*Math.PI))*((width-100)/2)));
+
+var yy = group[0]["0"].transform.baseVal["0"].matrix.f + -scroll;
+console.log(yy);
+
+  group.transition()
+    .ease("linear")
+    .duration(100)  
+    .attr("transform", "translate(" + 0 + "," + yy + ")");
+
+}
+
+function move(direction) {
+  return function(event) {
+    event.preventDefault();
+      if (direction === "up") {
+        console.log('up');
+        upwards();
+      } else if (direction === "down") {
+        downwards();
+      };
+  };
+}
+
+d3.select('body').call(d3.keybinding()
+    .on('←', move("up"))
+    .on('↑', move("up"))
+    .on('→', move("down"))
+    .on('↓', move("down")));
+
+</script>
