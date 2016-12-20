@@ -22,23 +22,43 @@
     overflow: hidden;
 }
 
-#title-box h2 {
+.row h2, p {
     font-family: 'Press Start 2P', monospace !important;   
     color: #fff;
 }
 
-#title-box h3 {
+.row h3 {
     font-family: 'Press Start 2P', monospace !important;   
 }
 
-#title-container {    
+.row p {
+    font-size: 14px;
+    text-transform: uppercase;
+}
+
+#idea h1 {
+    font-family: 'Press Start 2P', monospace !important;   
+    color: #fff;
+    font-size: 40px;
+    padding-bottom: 20px;   
+}
+
+#wagon-container,
+#title-container,
+#idea-container
+ {    
     position: relative;
     width: 100%;
     height: auto;
     z-index: 90;
 }
 
-#title-box-cover, #title-box {
+#wagon-container {
+    /*height: 500px;*/
+    z-index: 1000000;
+}
+
+#idea-box-cover, #idea-box, #title-box-cover, #title-box {
     background-color: rgb(58,47,16) !important;
     height: 500px;
     text-align: center;
@@ -54,16 +74,41 @@
     height: 500px;
 }
 
+#idea-box {
+    right: -100%;
+}
+
 .bottom-spacer {
-    margin-bottom: 20px;
+    margin-bottom: 10px;
 }
 
 .top-spacer {
+    margin-top: 10px;
+}
+
+.top-spacer-2 {
     margin-top: 20px;
 }
 
+.top-spacer-3 {
+    margin-top: 30px;
+}
+
 .top-spacer-4 {
-    margin-top: 100px;
+    margin-top: 40px;
+}
+
+.arrow-down {
+    width: 100px;
+    height: 50px;
+    background-image: url("../img/arrow-down.png");
+    background-repeat: no-repeat;
+    background-size: 100px 50px;
+    margin: 0 auto;
+}
+
+#subidea p {
+    margin-bottom: 15px;
 }
 
 #wagon {
@@ -71,6 +116,8 @@
     position: absolute;
     left: -30%;
     bottom: 5%;
+    z-index: 100000000;
+    top: 400px;
 }
 
 h1.title {
@@ -239,6 +286,29 @@ h1.title {
 
 
 @media only screen and (min-width: 40.063em) { 
+        .bottom-spacer {
+            margin-bottom: 20px;
+        }
+
+        .top-spacer {
+            margin-top: 20px;
+        }
+
+        .top-spacer-2 {
+            margin-top: 40px;
+        }
+
+        .top-spacer-3 {
+            margin-top: 60px;
+        }
+
+        .top-spacer-4 {
+            margin-top: 100px;
+        }
+        #subidea p {
+            margin-bottom: 25px;
+        }
+
 
     } /* min-width 641px, medium screens */
 @media only screen and (min-width: 64.063em) { 
