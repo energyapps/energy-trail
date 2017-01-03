@@ -174,6 +174,19 @@ function move(direction) {
   };
 }
 
+
+var $udu = $("#updownup");
+var $udd = $("#updowndown");
+
+$udu.click(function() {	
+	console.log('upperclick')
+	upwards();
+})
+$udd.click(function() {
+	downwards();
+})
+
+
 d3.select('body').call(d3.keybinding()
     .on('←', move("up"))
     .on('↑', move("up"))
