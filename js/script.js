@@ -1,4 +1,5 @@
 var i = 1;
+var transtime = 2000;
 
 $(document).ready(function(){
 	$("body").hide(0)
@@ -8,7 +9,8 @@ $(document).ready(function(){
 // what to do on load
 $(window).on("load", function() {
 	$("body").fadeIn(300)
-	$("#title-box-cover").animate({left: "100%"},2000);
+	$("#title-box-cover").animate({left: "100%"},transtime);
+	
 });
 
 
@@ -20,47 +22,73 @@ $(window).keypress(function(e) {
 
 function enter(i) {
 	if (i === 1) {
-		first();
+		title();
 	}
 	else if (i === 2) {
-		second();
-	};
+		idea();
+	}
+	else if (i === 3) {
+		store();
+	}
+	else if (i === 4) {
+		letsgo();
+	}
+	else if (i === 5) {
+		hitit();
+	}
 }
 
-function first() {
+function title() {
 	$("#title-box-cover").animate({opacity:"0"},50);
-	$("#wagon").animate({left:"80%"},4000,"linear",function(){
-		$("#title-box").animate({right:"100%"},4000);	
-		$("#idea-box").animate({right:"0%"},4000, function(){
-			$("#wagon").animate({left:"120%"},2000,"linear", function(){
+	$("#wagon").animate({left:"80%"},transtime,"linear",function(){
+		$("#title-box").animate({right:"100%"},transtime);	
+		$("#idea-box").animate({right:"0%"},transtime, function(){
+			$("#wagon").animate({left:"120%"},(transtime/2),"linear", function(){
+				console.log('1')
 				i += 1;
 			})
 		});	
 	})
 }
 
-function second() {
-	console.log('htest')
+function idea() {
+	
+	
+	$("#idea-box").animate({"margin-top":"-51%"},transtime,"linear", function(){
+		
+	});
+	$("#store-box").animate({"margin-top":"0"},transtime,"linear");
+	console.log('2')
+	i += 1;
 }
 
+function store() {
+	$("#substore").animate({"margin-top":"-90%"},transtime,"linear");
+	console.log('3')
+	i += 1;
+}
 
+function letsgo() {
+	$("#store-box").animate({"margin-top":"-50%"},transtime,"linear");
+	$("#letsgo-box").animate({"margin-top":"0%"},transtime,"linear");
+	console.log('4')
+	i += 1;
+}
 
-
-
+function hitit() {
+	$("#letsgo-upper").animate({"margin-top":"-19%"},(transtime/2),"linear", function(){
+		wagon.transition()
+	    .ease("linear")
+	    .duration(transtime/2)        
+	    .attr("x", 0);	
+	});	
+	
+	console.log('5')
+	i += 1;
+}
 
 
 //things to do on scroll
 // $(document).scroll(function() {
-// 		var width = $(document).width();
-// 		var now = $(document).scrollTop()
-// 		if (now <=(5*width / 6)) {
-// 			$("#bg0").fadeIn(100)
-// 			// $("#title").fadeIn(100)
-			
-// 		}
-// 		else if (now >= (5*width / 6)){
-// 			$("#bg0").fadeOut(100)
-// 			// $("#title").fadeOut(100)
-// 		};
 
 // })

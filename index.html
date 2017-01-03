@@ -1,5 +1,5 @@
 ---
-layout: default
+layout: fulltrail
 ---
 <div id="master_container" class="m_container">        
   <div id="wagon-container">
@@ -8,11 +8,18 @@ layout: default
 	  </div>
   </div>
   
+  <style type="text/css">
+  	/*#store-container,
+  	#title-container,
+  	#idea-container {
+  		opacity: 0;
+  	}*/
+  </style>
 
-  {% include first-page.html %}
-  {% include second-page.html %}
-
-
+  {% include title.html %}
+  {% include idea.html %}
+	{% include store.html %}
+	{% include letsgo.html %}
 
    
 </div>    
