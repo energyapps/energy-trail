@@ -10,10 +10,6 @@ $(document).ready(function(){
 $(window).on("load", function() {
 	$("body").fadeIn(300)
 	$("#title-box-cover").animate({left: "100%"},transtime);
-		
-	var $udu = $("#updownup");
-	var $udd = $("#updowndown");
-	var lll = 0;
 	
 });
 
@@ -85,6 +81,10 @@ function hitit() {
 	    .ease("linear")
 	    .duration(transtime/2)        
 	    .attr("x", 0);	
+	
+	var $udu = $("#updownup");
+	var $udd = $("#updowndown");
+	var lll = 0;
 
 	  // move the pointer
 	  var pointer = setInterval(function(){
@@ -95,7 +95,8 @@ function hitit() {
 	    if (lll === 8) {
 	    	console.log('test3')
 	    	$udu.removeClass("active");
-	    	$udd.removeClass("active")
+	    	$udd.removeClass("active");
+	    	clearInterval(pointer)
 	    };
 	    lll += 1;	
 		}, 800);
