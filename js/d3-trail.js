@@ -36,7 +36,7 @@ var pattern1 = defs.append("pattern")
   .append("svg:image")
     .attr("width",100)
     .attr("height",100)
-    .attr("xlink:href", "../img/battery-wagon.png");
+    .attr("xlink:href", "img/battery-wagon.png");
 
 var pixPattern1 = defs.append("pattern")
   .attr("width",pixwidth)
@@ -46,7 +46,7 @@ var pixPattern1 = defs.append("pattern")
   .append("svg:image")
     .attr("width",pixwidth)
     .attr("height",pixheight)
-    .attr("xlink:href", "../img/bkg_pixels/stage1-top.png");    
+    .attr("xlink:href", "img/bkg_pixels/stage1-top.png");    
 
 var pixPattern2 = defs.append("pattern")
   .attr("width",pixwidth)
@@ -57,7 +57,7 @@ var pixPattern2 = defs.append("pattern")
   .append("svg:image")
     .attr("width",pixwidth)
     .attr("height",pixheight)
-    .attr("xlink:href", "../img/bkg_pixels/stage2-top.png");    
+    .attr("xlink:href", "img/bkg_pixels/stage2-top.png");    
 
 var pixPattern3 = defs.append("pattern")
   .attr("width",pixwidth)
@@ -68,7 +68,7 @@ var pixPattern3 = defs.append("pattern")
   .append("svg:image")
     .attr("width",pixwidth)
     .attr("height",pixheight)
-    .attr("xlink:href", "../img/bkg_pixels/stage3-bottom.png");        
+    .attr("xlink:href", "img/bkg_pixels/stage3-bottom.png");        
 
 var pixels1 = group.append("rect")
   .attr("x",0)
