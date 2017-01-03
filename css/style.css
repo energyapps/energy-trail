@@ -48,7 +48,7 @@
     background-color: rgb(182,196,74);
     padding-top: 60px;
     padding-bottom: 40px;
-    /*margin-top: -18%;*/
+    margin-top: -19%;
 }
 
 #letsgo-title h1 {
@@ -80,7 +80,7 @@
 }
 
 #letsgo-box {
-    margin-top: 51%;
+    /*margin-top: 51%;*/
 }
 
 #letsgo-lower {
@@ -138,14 +138,65 @@
     margin-top: 40px;
 }
 
-.arrow-down {
+#updownup {
     width: 50px;
+    height: 100px;
+    position: absolute;
+    top: 0;
+    right: 5%;
+    z-index: 10000000;
+  }
+
+#updowndown {
+    width: 50px;
+    height: 100px;
+    position: absolute;
+    top: 50px;
+    right: 5%;
+    z-index: 10000000;
+  }
+
+.arrow-down {
+    width: 40px;
     height: 25px;
     background-image: url("../img/arrow-down.png");
     background-repeat: no-repeat;
-    background-size: 50px 25px;
+    background-size: 40px 25px;
     margin: 0 auto;
 }
+
+.arrow-up {
+    width: 40px;
+    height: 25px;
+    background-image: url("../img/arrow-up.png");
+    background-repeat: no-repeat;
+    background-size: 40px 25px;
+    margin: 0 auto;
+}    
+
+.arrow-bg {
+    width: 60px;
+    height: 45px;
+    background-color: #fff;
+    padding-top: 10px;
+    margin: 0 auto;
+    margin-top: 10px;
+    -webkit-box-shadow: 5px 5px 0px 0px #ddd;
+    -moz-box-shadow: 5px 5px 0px 0px #ddd;
+    box-shadow: 5px 5px 0px 0px #ddd;
+    cursor: pointer;
+}
+
+.arrow-bg:hover, 
+#updownup.active .arrow-bg,
+#updowndown.active .arrow-bg {
+    margin-left: 5px;
+    margin-top: 15px;
+    -webkit-box-shadow: 1px 1px 0px 0px #ddd;
+    -moz-box-shadow: 1px 1px 0px 0px #ddd;
+    box-shadow: 1px 1px 0px 0px #ddd;
+}
+
 
 #subidea p {
     margin-bottom: 15px;
