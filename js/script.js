@@ -99,8 +99,8 @@ function hitit() {
 	    .duration(transtime/2)        
 	    .attr("x", 0);	
 	
-	var $udu = $("#updownup");
-	var $udd = $("#updowndown");
+	var $udu = $(".up");
+	var $udd = $(".down");
 	var lll = 0;
 
 	  // move the pointer
